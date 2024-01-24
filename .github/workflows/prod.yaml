@@ -9,9 +9,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+      - name: Check Release Manager
+        id: check_release_manager
+        run: echo "Is Release Manager= ${{ github.actor == 'maayanassraf' }}"
       - name: Build
+        if: steps.check_release_manager.outputs.is_release_manager == 'true'
         run: |
-          echo building and packing and app...
+          echo Building and packing an app...
   DeploySimulation:
     runs-on: ubuntu-latest
     needs: BuildSimulation
